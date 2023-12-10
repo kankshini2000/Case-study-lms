@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 
 function User() {
   const [users, setUsers] = useState([]);
+  const userRole = localStorage.getItem("role");
 
   useEffect(() => {
     loadUsers();
@@ -12,7 +13,6 @@ function User() {
 
   const loadUsers = async () => {
     const results = await axios.get("http://localhost:8090/api/v1/user/getAll");
-    // console.log(results.data);
     setUsers(results.data);
   };
 
@@ -22,56 +22,52 @@ function User() {
   };
 
   return (
-    <div classNameName="container">
-      {/* margin top */}
-      <div classNameName="py-20">
-        <table className="table border shadow">
-          <button className="btn btn-outline-light">Add User</button>
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">User Role</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((users, index) => (
-              <tr>
-                <th scope="row" key={index}>
-                  {index + 1}
-                </th>
-                <td>{users.uname}</td>
-                <td>{users.email}</td>
-                <td>{users.role}</td>
-                <td>
-                  <Link
-                    className="btn btn-primary mx-2"
-                    to={`/viewuser/${users.pid}`}
-                  >
-                    View
-                  </Link>
-                  <Link
-                    className="btn btn-outline-primary mx-2"
-                    to={`/edituser/${users.pid}`}
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="btn btn-danger mx-2"
-                    onClick={() => deleteUser(users.pid)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Link className="btn btn-warning" to="/adduser">
-          Add User
-        </Link>
+    <div className="container">
+      <div className="py-3">
+        <div className="row">
+          {users.map((user, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{user.uname}</h5>
+                  <p className="card-text">Email: {user.email}</p>
+                  <p className="card-text">User Role: {user.role}</p>
+                  <div className="btn-group">
+                    <Link
+                      className="btn btn-primary me-2"
+                      to={`/viewuser/${user.pid}`}
+                    >
+                      View
+                    </Link>
+                    {userRole === "ADMIN" && (
+                      <>
+                        <Link
+                          className="btn btn-outline-primary me-2"
+                          to={`/edituser/${user.pid}`}
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          className="btn btn-danger me-2"
+                          onClick={() => deleteUser(user.pid)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {userRole === "ADMIN" && (
+          <div className="container text-center">
+            <Link className="btn btn-warning d-inline-block" to="/adduser">
+              Add User
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

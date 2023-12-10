@@ -27,7 +27,6 @@ export default function ViewUser() {
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">User Details</h2>
-
           <div className="card">
             <div className="card-header">
               Details of user id : {user.pid}
@@ -47,8 +46,8 @@ export default function ViewUser() {
               </ul>
             </div>
           </div>
-          <Link className="btn btn-primary my-2" to={"/"}>
-            Back to Home
+          <Link className="btn btn-primary my-2" to={"/users"}>
+            Back to Users
           </Link>
         </div>
       </div>

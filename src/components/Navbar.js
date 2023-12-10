@@ -1,13 +1,22 @@
+// Navbar.js
 import React from "react";
-import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import Users from "./users/Users";
-import Courses from "./courses/Courses";
-import Task from "./tasks/Task";
-//import AddUser from "./components/users/AddUser";
-//import Users from "./users/Users";
+import { Link, useLocation } from "react-router-dom";
+
 const Navbar = () => {
+  useLocation();
+
+  const userRole = localStorage.getItem("role");
+  const pid = localStorage.getItem("pid");
+  const uname = localStorage.getItem("uname");
+  console.log(userRole);
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("pid");
+    localStorage.removeItem("uname");
+    // Redirect to the login page or any other desired page after logout
+    window.location.href = "/";
+  };
+
   return (
     <div className="navbar">
       <div className="logo">Learning Tracker System</div>
@@ -15,23 +24,33 @@ const Navbar = () => {
         <Link className="btn btn-outline-light" to="/">
           Home
         </Link>
-        <Link className="btn btn-outline-light" to="/users" component={Users}>
-          Users
-        </Link>
-        <Link className="btn btn-outline-light" to="/courses">
-          Courses
-        </Link>
-        <Link className="btn btn-outline-light" to="/tasks">
-          Tasks
-        </Link>
-        {/* <Routes>
-          <Route>
-          <Route  exact path="/" component={Home}/>
-          <Route  path="/users" component={Users}/>
-          <Route  path="/courses" component={Courses}/>
-          <Route  path="/tasks" component={Task}/>
-         </Route>
-        </Routes> */}
+        {userRole === "ADMIN" && (
+          <>
+            <Link className="btn btn-outline-light" to="/users">
+              Users
+            </Link>
+            <Link className="btn btn-outline-light" to="/courses">
+              Courses
+            </Link>
+            <Link className="btn btn-outline-light" to="/tasks">
+              Tasks
+            </Link>
+          </>
+        )}
+        {userRole === "USER" && (
+          <Link className="btn btn-outline-light" to="/tasks">
+            Tasks
+          </Link>
+        )}
+        {!userRole ? (
+          <Link className="btn btn-outline-light" to="/login">
+            Login
+          </Link>
+        ) : (
+          <button className="btn btn-outline-light" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

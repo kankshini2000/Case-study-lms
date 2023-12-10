@@ -1,3 +1,7 @@
+/* * {
+  z-index: 1;
+} */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -7,16 +11,32 @@
   color: #fff;
 }
 
+.fade-in {
+  transition: opacity 1s ease-in-out;
+}
+
+/* .footer-content {
+  /* // position: fixed; */
+/* width: 100%; */
+/* background-color: rgb(32, 95, 168);
+  text-align: center;
+  bottom: 0%;
+} */
+
 .footer-container {
   position: fixed;
   bottom: 0;
   width: 100%;
   background-color: rgb(32, 95, 168);
-  padding: 10px; /* Adjust the padding as needed */
+  /* padding: 5px; */
   text-align: center;
 }
 
-.logo {
+.footer-container {
+  z-index: 1; /* Adjust the value as needed */
+}
+
+*/ .logo {
   font-size: 1.5rem;
   font-weight: bold;
 }

@@ -7,11 +7,12 @@ export default function AddUser() {
 
   const [user, setUser] = useState({
     uname: "",
+    password: "",
     email: "",
     role: "",
   });
 
-  const { uname, email, role } = user;
+  const { uname, password, email, role } = user;
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -40,6 +41,19 @@ export default function AddUser() {
                 placeholder="Enter your name"
                 name="uname"
                 value={uname}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="Email" className="form-label">
+                Password
+              </label>
+              <input
+                type={"password"}
+                className="form-control"
+                placeholder="Enter your password"
+                name="password"
+                value={password}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
